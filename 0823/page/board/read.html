@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #popup{
+            display:none;
+            color:red;
+            width:500px;
+            height:200px;
+            border:1px;
+            background:blue;
+            position:absolute;
+            z-index:2;
+            left:50%;
+            top:30%;
+            transform: translateY(+50%);
+            transform: translateX(-50%);}</style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>제목</td>
+            <td>{{subject}}</td>
+        </tr>
+        <tr>
+            <td>글쓴이</td>
+            <td>{{writer}}</td>
+        </tr>
+        <tr>
+            <td>내용</td>
+            <td>{{content}}</td>
+        </tr>
+    
+    
+    
+    </table>
+    <a href = "/board/modify/{{id}}">수정하기</a>
+    <a href="/board">목록으로</a>
+    <button id = "delter_btn" >삭제하기</button>
+    <div id = "popup">정말로 삭제하시겠습니까?
+        <button><a href="/board/delete/{{id}}">네</a></button>
+        <button id = "popup_close">아니요</button>
+    </div>
+    <script type = "text/javascript">
+        let delete_btn = document.querySelector('#delter_btn');
+        let popup_close = document.querySelector('#popup_close');
+        let popup = document.querySelector('#popup');
+
+        popup_close.addEventListener('click',()=>{
+            popup.style.display="none"
+        })
+        delete_btn.addEventListener('click',()=>{
+            console.log('aaa');
+            popup.style.display="block"
+        })
+    </script>
+</body>
+</html>

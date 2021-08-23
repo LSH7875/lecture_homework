@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+        {% if mode == 1 %}
+        <form action = "/board/modify/{{id}}" method= "post">
+            <table>
+        <tr>
+            <td>제목</td>
+            <td><input type="text" value = "{{subject}}" name = "subject"/></td>
+        </tr>
+        <tr>
+            <td>글쓴이</td>
+            <td><input type="text" name = "writer" value = "{{writer}}" /></td>
+        </tr>
+        <tr>
+            <td>내용</td>
+            <td> <input type="textarea" name = "content" value = "{{content}}" /></td>
+        </tr>
+        {% else %}
+        <form action = "/board/write" method= "post">
+            <table>
+        <tr>
+            <td>제목</td>
+            <td><input type="text" name = "subject"/></td>
+        </tr>
+        <tr>
+            <td>글쓴이</td>
+            <td><input type="text" name = "writer" /></td>
+        </tr>
+        <tr>
+            <td>내용</td>
+            <td> <input type="textarea" name = "content"  /></td>
+        </tr>
+        {% endif %}
+    </table>
+    <input type = "submit" value = "글쓰기">
+
+    </form>
+</body>
+</html>

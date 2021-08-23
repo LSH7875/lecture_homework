@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type = "text/babel">
+
+    const reducer =(state,action)=>{
+        switch(action.type){
+            case "CREATE":
+                return{list:[...state.list,action.payload]}
+            case "DELETE":
+                console.log(action.payload)
+                console.log('페이로드 딜리트값')
+                // const aa= state.list.filter((v,k)=>{
+                //     return k !== action.payload
+                // })
+
+                const list = state.list.filter( (v,k)=>{
+                    return k !== parseInt(action.payload)
+                } )
+                return{
+                    ...state,
+                    list
+                }
+            case "UPDATE":
+
+                const newArr =[...state.list];
+
+                newArr[action.payload.index]=action.payload.list
+
+                return{list:newArr,flag:Infinity}
+            case "CHANGETOMODI":
+                return{...state,flag:action.payload} 
+            default: 
+                return state;
+        }
+
+    }
+    const list =[]
+
+    const App =()=>{
+        const initialState={list:[],flag:Infinity}
+
+        const [state,dispatch]=React.useReducer(reducer,initialState)
+        const [input,setInput] = React.useState('')
+        const [content,setContent] = React.useState('')
+        const [list,setList] =React.useState([])
+        const handleSubmit=(e)=>{
+            e.preventDefault();
+            // console.log('list',list);
+            // const newList = [...list] 
+            // newList.push(input)
+            // setList(newList)
+            // console.log('list후',list);
+            // list.push(input)
+            // console.log('핸들어쩌구')
+            // setList(list)
+            // console.log('여기는 되는가')
+            // console.log(list)
+            // setInput('')
+            dispatch({type:"CREATE",payload:input})
+        }
+        const handleChange = (e) =>{
+            const {value}={...e.target} 
+            setInput(value)
+        }
+
+        const updateChange =(e)=>{
+            const {value}={...e.target}
+            setContent(value)
+        }
+        const updateKeyDown =(e)=>{
+            if(e.key==="Enter")dispatch({type:"UPDATE",payload:{index:e.target.dataset.key,list:content}})
+        }
+
+        const handleClick=(e)=>{
+            const key=e.target.dataset.key
+            dispatch({type:"CHANGETOMODI",payload:key})
+            setContent(state.list[e.target.dataset.key])
+        }
+
+        const deleteClick=(e)=>{
+            dispatch({type:"DELETE",payload:e.target.dataset.key})
+        }
+
+        return (
+            <>
+                <form onSubmit = {handleSubmit}>
+                    <input 
+                        type = "text" 
+                        onChange = {handleChange}
+                        value = {input}
+                    />
+                    <button type ="submit">등록</button>
+                </form>
+                <ul>
+                    <span>
+                    {
+                        state.list.map((v,k)=>{
+                            return (
+                                <li key={k}>
+                                    <span data-key={k} onClick={handleClick}>
+                                        {parseInt(state.flag) === k?
+                                            <input 
+                                                type="text"
+                                                key={k}
+                                                onChange={updateChange}
+                                                value={content}
+                                                data-key={k}
+                                                onKeyDown={updateKeyDown}
+                                            />
+                                            :v                                            
+                                        }
+                                        
+                                    </span>
+                                    <button data-key={k} onClick={deleteClick}>X</button>
+                                </li>
+                                )
+                        })
+                    }
+                    </span>
+                </ul>
+            </>
+        )
+    }
+
+    ReactDOM.render(
+        <App/>,
+        document.querySelector('#root')
+
+    )
+    
+    
+    </script>
+</body>
+</html>
