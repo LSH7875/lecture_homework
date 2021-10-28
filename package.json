@@ -1,15 +1,22 @@
 {
   "dependencies": {
-    "express": "^4.17.1"
+    "chai": "^4.3.4",
+    "crypto-js": "^4.1.1",
+    "express": "^4.17.1",
+    "merkle": "^0.6.0",
+    "web3": "^1.6.0",
+    "ws": "^8.2.1"
   },
   "name": "coding_practice",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^16.11.6"
+  }
 }
